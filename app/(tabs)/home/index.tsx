@@ -1,29 +1,31 @@
-import { router } from 'expo-router';
+import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Counter from '../../../components/Counter';
 
 export default function HomeScreen() {
+  const router = useRouter();
   const [name, setName] = useState<string>('Kevin Ivander');
 
-  const onSubmit = () => {
+  const goToDetail = () => {
     const finalName = name.trim() || 'Tanpa Nama';
+    // relative push ke stack: /home/detail
     router.push({ pathname: '/detail', params: { name: finalName } });
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header Card: ReviewRN */}
+      {/* Kartu judul */}
       <View style={styles.heroCard}>
         <Text style={styles.appBadge}>ReviewRN</Text>
         <Text style={styles.appTitle}>ReviewRN</Text>
         <Text style={styles.appDesc}>
-          Aplikasi singkat untuk menyimpan dan melihat detail nama siswa. Masukkan nama di bawah
-          lalu tekan “Tambahkan Data”.
+          Aplikasi singkat untuk menyimpan dan melihat detail nama siswa. Masukkan nama di bawah lalu tekan “Tambahkan Data”.
         </Text>
       </View>
 
-      {/* Form Card */}
+      {/* Form + tombol */}
       <View style={styles.formCard}>
         <Text style={styles.label}>Nama Siswa</Text>
         <TextInput
@@ -34,9 +36,15 @@ export default function HomeScreen() {
           style={styles.input}
         />
 
-        <Pressable onPress={onSubmit} style={({ pressed }) => [styles.button, pressed && styles.buttonPressed]}>
+        <Pressable onPress={goToDetail} style={({ pressed }) => [styles.button, pressed && styles.buttonPressed]}>
           <Text style={styles.buttonText}>Tambahkan Data</Text>
         </Pressable>
+      </View>
+
+      {/* Contoh komponen state */}
+      <View style={styles.formCard}>
+        <Text style={styles.label}>Counter (demo useState)</Text>
+        <Counter />
       </View>
     </SafeAreaView>
   );
